@@ -13,3 +13,5 @@ Backend/node_modules/
 Frontend/dist/
 Frontend/.env
 Backend/.env
+
+Backend/create_admin_aiven.js

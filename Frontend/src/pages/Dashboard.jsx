@@ -106,7 +106,7 @@ const Dashboard = () => {
                             <h3 className="text-[10px] font-black tracking-widest text-[#00e5ff] uppercase mb-8">Recent Transmissions</h3>
                             <div className="space-y-6">
                                 <ActivityItem date="JAN 08, 2026" text="Flight profile credentials updated successfully" />
-                                <ActivityItem date="JAN 07, 2026" text="Welcome to FPV HAVEN Pilot Academy" />
+                                <ActivityItem date="JAN 07, 2026" text="Welcome to QUAD HUB Pilot Academy" />
                             </div>
                         </div>
                     </div>

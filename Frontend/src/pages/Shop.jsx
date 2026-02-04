@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import {
     Search, Filter, ShoppingCart, Heart, SlidersHorizontal, ChevronRight,
     Sparkles, LayoutGrid, List, Cpu, Crosshair, Wifi, Battery, Terminal,
-    Scan, Grid, Zap, Activity, Radio, Box
+    Scan, Grid, Zap, Activity, Radio, Box, X, Hammer
 } from 'lucide-react';
 
 const Shop = () => {
@@ -33,7 +33,7 @@ const Shop = () => {
 
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [activeView, setActiveView] = useState('grid'); // 'grid' | 'list'
+    const [showMobileFilters, setShowMobileFilters] = useState(false);
 
     useEffect(() => {
         const getProducts = async () => {
@@ -127,10 +127,10 @@ const Shop = () => {
                 <div className="absolute inset-0 bg-radial-gradient(circle, transparent 40%, #050505 100%) pointer-events-none" />
             </div>
 
-            <div className="max-w-[1600px] mx-auto px-6 relative z-10 pt-8">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-6 relative z-10 pt-8">
 
                 {/* --- HUD Header --- */}
-                <header className="flex flex-col md:flex-row items-end justify-between gap-8 mb-12 border-b border-white/5 pb-8 relative">
+                <header className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 md:gap-8 mb-12 border-b border-white/5 pb-8 relative">
                     <div className="absolute bottom-0 left-0 w-32 h-[1px] bg-[#00a3ff] shadow-[0_0_10px_#00a3ff]" />
 
                     <div>
@@ -139,20 +139,20 @@ const Shop = () => {
                                 <Wifi className="w-3 h-3 animate-pulse" />
                                 <span>LINK: STABLE</span>
                             </div>
-                            <div className="text-[10px] font-bold text-gray-600 tracking-[0.2em]">[ SECURE CONNECTION ]</div>
+                            <div className="text-[10px] font-bold text-gray-600 tracking-[0.2em] hidden sm:block">[ SECURE CONNECTION ]</div>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black text-white leading-none tracking-tighter uppercase relative inline-block">
+                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-none tracking-tighter uppercase relative inline-block">
                             ARMORY <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00a3ff] to-[#00e5ff]">REQUISITION</span>
-                            <span className="absolute -top-2 -right-4 text-[10px] font-bold text-gray-500">v.4.0.2</span>
+                            <span className="absolute -top-2 -right-4 text-[10px] font-bold text-gray-500 hidden sm:block">v.4.0.2</span>
                         </h1>
                     </div>
 
                     {/* Quick Stats / Search */}
-                    <div className="flex flex-col items-end gap-4 w-full md:w-auto">
-                        <div className="flex items-center gap-4">
-                            <div className="text-right hidden md:block">
+                    <div className="flex flex-col items-start lg:items-end gap-4 w-full lg:w-auto">
+                        <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full">
+                            <div className="text-left md:text-right">
                                 <div className="text-[10px] text-gray-500 uppercase tracking-widest">Available Assets</div>
-                                <div className="text-xl font-bold text-white">{products.length || 0} UNITS</div>
+                                <div className="text-xl font-bold text-white leading-none mt-1">{products.length || 0} UNITS</div>
                             </div>
                             <div className="h-8 w-[1px] bg-white/10 hidden md:block" />
                             <div className="relative group w-full md:w-80">
@@ -167,19 +167,41 @@ const Shop = () => {
                                 />
                             </div>
                         </div>
+                        <button
+                            onClick={() => setShowMobileFilters(!showMobileFilters)}
+                            className={`
+                                lg:hidden flex items-center justify-center gap-3 w-full md:w-auto px-6 py-4 rounded-lg 
+                                transition-all duration-300 relative overflow-hidden group border
+                                ${showMobileFilters
+                                    ? 'bg-[#00a3ff] border-[#00a3ff] text-black shadow-[0_0_30px_rgba(0,163,255,0.4)]'
+                                    : 'bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20'}
+                            `}
+                        >
+                            <div className={`transition-transform duration-500 ${showMobileFilters ? 'rotate-180' : 'rotate-0'}`}>
+                                <Hammer className={`w-5 h-5 ${showMobileFilters ? 'text-black' : 'text-[#00a3ff]'}`} />
+                            </div>
+                            <span className="text-[11px] font-black uppercase tracking-[0.25em] italic">
+                                {showMobileFilters ? 'DISENGAGE TACTICAL' : 'ENGAGE FILTERS'}
+                            </span>
+
+                            {/* Animated Background Line */}
+                            {!showMobileFilters && (
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[scanline_2s_linear_infinite]" />
+                            )}
+                        </button>
                     </div>
                 </header>
 
                 {/* --- Frequency Tuner (Categories) --- */}
-                <div className="mb-12 relative">
+                <div className="mb-8 lg:mb-12 relative overflow-hidden">
                     <div className="absolute inset-x-0 bottom-0 h-[1px] bg-white/5" />
-                    <div className="flex overflow-x-auto pb-4 gap-2 no-scrollbar mask-gradient">
+                    <div className="flex overflow-x-auto pb-4 gap-2 no-scrollbar mask-gradient scroll-smooth">
                         {categories.map((cat) => (
                             <button
                                 key={cat.id}
                                 onClick={() => { setCategory(cat.id === 'All' ? '' : cat.id); setPage(1); }}
                                 className={`
-                                    relative group px-6 py-3 min-w-max flex items-center gap-3 border transition-all duration-300 overflow-hidden
+                                    relative group px-4 md:px-6 py-3 min-w-max flex items-center gap-3 border transition-all duration-300 overflow-hidden
                                     ${(category === cat.id || (cat.id === 'All' && !category))
                                         ? 'bg-[#00a3ff]/10 border-[#00a3ff] text-[#00e5ff] shadow-[0_0_20px_rgba(0,163,255,0.2)]'
                                         : 'bg-transparent border-white/5 text-gray-500 hover:border-white/20 hover:text-white'}
@@ -187,7 +209,7 @@ const Shop = () => {
                             >
                                 <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[scanline_1s_linear_infinite]`} />
                                 {cat.icon}
-                                <span className="text-xs font-black tracking-widest uppercase">{cat.label}</span>
+                                <span className="text-[10px] md:text-xs font-black tracking-widest uppercase">{cat.label}</span>
                                 {cat.id === category && <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#00e5ff] animate-pulse" />}
                             </button>
                         ))}
@@ -195,18 +217,38 @@ const Shop = () => {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-8">
+                    {/* --- Mobile Backdrop --- */}
+                    {showMobileFilters && (
+                        <div
+                            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+                            onClick={() => setShowMobileFilters(false)}
+                        />
+                    )}
 
                     {/* --- Tactical Console (Filters) --- */}
-                    <aside className="w-full lg:w-64 shrink-0 space-y-8 hidden lg:block">
-                        <div className="p-6 border border-white/5 bg-black/40 backdrop-blur-md relative overflow-hidden">
+                    <aside className={`
+                        fixed lg:relative inset-y-0 left-0 z-50 w-80 lg:w-64 transform ${showMobileFilters ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} 
+                        transition-transform duration-300 ease-in-out bg-[#050505] lg:bg-transparent lg:block shrink-0
+                        p-6 lg:p-0 border-r lg:border-r-0 border-white/5 lg:space-y-8 overflow-y-auto lg:overflow-visible
+                    `}>
+                        <div className="lg:hidden flex justify-between items-center mb-8">
+                            <h3 className="text-xs font-black text-[#00a3ff] uppercase tracking-[0.2em] flex items-center gap-2">
+                                <Terminal className="w-4 h-4" /> System Stats
+                            </h3>
+                            <button onClick={() => setShowMobileFilters(false)} className="text-gray-500 hover:text-white">
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
+
+                        <div className="p-6 border border-white/5 bg-black/40 backdrop-blur-md relative overflow-hidden rounded-sm">
                             <div className="absolute top-0 right-0 p-2 text-[#00a3ff] opacity-20"><Crosshair className="w-12 h-12" /></div>
 
                             <h3 className="text-xs font-black text-[#00a3ff] uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                                 <Terminal className="w-4 h-4" /> Filter Parameters
                             </h3>
 
-                            <div className="space-y-6">
-                                {/* Price Range Mockup */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+                                {/* Price Range */}
                                 <div className="space-y-3">
                                     <label className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Credit Range</label>
                                     <div className="flex items-center gap-2">
@@ -243,7 +285,7 @@ const Shop = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-8 pt-6 border-t border-white/5 text-[9px] text-[#00a3ff]/50 font-mono leading-relaxed">
+                            <div className="mt-8 pt-6 border-t border-white/5 text-[9px] text-[#00a3ff]/50 font-mono leading-relaxed hidden lg:block">
                                 &gt; READY FOR DEPLOYMENT<br />
                                 &gt; SCANNING SECTOR 7<br />
                                 &gt; OPTIMIZING ROUTE
@@ -306,7 +348,7 @@ const Shop = () => {
 // --- Sub-Component: HoloCard ---
 const HoloCard = ({ product, addToCart }) => {
     return (
-        <div className="holo-card relative group h-[400px] bg-black/40 border border-white/10 overflow-hidden backdrop-blur-sm transition-all duration-500 hover:border-[#00a3ff]/50 hover:shadow-[0_0_30px_rgba(0,163,255,0.1)]">
+        <div className="holo-card relative group min-h-[400px] md:h-[400px] bg-black/40 border border-white/10 overflow-hidden backdrop-blur-sm transition-all duration-500 hover:border-[#00a3ff]/50 hover:shadow-[0_0_30px_rgba(0,163,255,0.1)]">
             {/* Tech Corners */}
             <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20 group-hover:border-[#00e5ff] transition-colors z-20" />
             <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20 group-hover:border-[#00e5ff] transition-colors z-20" />
@@ -317,10 +359,10 @@ const HoloCard = ({ product, addToCart }) => {
             <div className="scan-line z-10" />
 
             {/* Image Section */}
-            <div className="h-1/2 relative overflow-hidden bg-[#0a0a0c]">
+            <div className="h-48 md:h-1/2 relative overflow-hidden bg-[#0a0a0c]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#000_100%)] z-10 opacity-40" />
                 <img
-                    src={product.imageUrl || 'https://via.placeholder.com/300'}
+                    src={product.image_url || 'https://via.placeholder.com/300'}
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter grayscale-[0.5] group-hover:grayscale-0"
                 />
@@ -346,7 +388,7 @@ const HoloCard = ({ product, addToCart }) => {
             </div>
 
             {/* Content Section */}
-            <div className="h-1/2 p-6 flex flex-col justify-between relative bg-gradient-to-b from-black/0 to-black/80">
+            <div className="min-h-1 flex-1 p-6 flex flex-col justify-between relative bg-gradient-to-b from-black/0 to-black/80">
                 <div>
                     <div className="flex items-center justify-between mb-2">
                         <h3 className="text-lg font-black text-white uppercase tracking-tighter line-clamp-1 group-hover:text-[#00e5ff] transition-colors">
@@ -375,7 +417,7 @@ const HoloCard = ({ product, addToCart }) => {
 
                     <button
                         onClick={() => addToCart(product)}
-                        className="group/btn relative px-4 py-2 bg-[#00e5ff]/10 hover:bg-[#00e5ff] border border-[#00e5ff]/50 transition-all duration-300 overflow-hidden"
+                        className="z-20 group/btn relative px-4 py-2 bg-[#00e5ff]/10 hover:bg-[#00e5ff] border border-[#00e5ff]/50 transition-all duration-300 overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-[#00e5ff] transform translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
                         <div className="relative flex items-center gap-2">
@@ -386,16 +428,6 @@ const HoloCard = ({ product, addToCart }) => {
 
                     {/* View Details Link Overlay */}
                     <Link to={`/product/${product.id}`} className="absolute inset-0 z-0" />
-                    {/* Provide z-index to button to ensure it's clickable over the link */}
-                    <div className="z-10 relative pointer-events-none">
-                        {/* Wrapper to handle click propagation if needed, but the button above has z-index implied by structure order or explicit? 
-                            Actually, standard stacking: button is after div, but link is absolute inset-0. Link will cover button.
-                            Fix: make button relative z-10.
-                        */}
-                    </div>
-                    <style>{`
-                        .holo-card button { z-index: 20; }
-                    `}</style>
                 </div>
             </div>
         </div>

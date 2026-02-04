@@ -42,18 +42,18 @@ const ProductDetails = () => {
         <div className="bg-[#0a0a0c] min-h-screen pb-20">
             <div className="max-w-7xl mx-auto px-4">
 
-                <Link to="/shop" className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-12 text-sm font-bold">
+                <Link to="/shop" className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-6 md:mb-12 text-xs md:text-sm font-bold">
                     <ArrowLeft className="w-4 h-4" /> BACK TO CATALOG
                 </Link>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
                     {/* Image Gallery */}
                     <div className="relative group">
-                        <div className="glass-card aspect-square overflow-hidden border-white/5 p-8">
+                        <div className="glass-card aspect-square overflow-hidden border-white/5 p-4 md:p-8 flex items-center justify-center">
                             <img
                                 src={product.imageUrl || 'https://via.placeholder.com/600'}
                                 alt={product.name}
-                                className="w-full h-full object-contain mix-blend-lighten scale-90 group-hover:scale-100 transition-transform duration-700"
+                                className="max-w-full max-h-full object-contain mix-blend-lighten scale-90 group-hover:scale-100 transition-transform duration-700"
                             />
                         </div>
                         <div className="absolute top-8 right-8 bg-[#00e5ff] text-black text-[10px] font-black px-3 py-1 rounded-full shadow-[0_0_20px_rgba(0,229,255,0.4)]">

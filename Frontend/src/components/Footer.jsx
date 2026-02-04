@@ -13,11 +13,11 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                     <div className="lg:col-span-1">
                         <Link to="/" className="flex items-center gap-3 group mb-8">
-                            <div className="bg-gradient-to-tr from-[#00a3ff] to-white/40 p-2 rounded-lg group-hover:rotate-12 transition-transform duration-300">
-                                <Ghost className="w-6 h-6 text-white" />
+                            <div className="w-10 h-10 rounded-lg overflow-hidden group-hover:rotate-12 transition-transform duration-300">
+                                <img src="/logo.png" alt="Quad Hub Logo" className="w-full h-full object-cover" />
                             </div>
-                            <span className="text-xl font-bold tracking-tight text-white group-hover:text-gradient transition-all">
-                                FPV HAVEN
+                            <span className="text-xl font-black italic tracking-tighter text-white group-hover:text-gradient transition-all">
+                                QUAD HUB
                             </span>
                         </Link>
                         <p className="text-gray-500 text-sm leading-relaxed mb-8 max-w-xs">
@@ -61,7 +61,7 @@ const Footer = () => {
 
                 <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-[10px] font-black text-gray-700 uppercase tracking-[0.4em]">
-                        © 2026 FPV HAVEN // ALL SYSTEMS OPERATIONAL
+                        © 2026 QUAD HUB // ALL SYSTEMS OPERATIONAL
                     </p>
                     <div className="flex items-center gap-2 text-[10px] font-black text-gray-500 uppercase tracking-widest">
                         <Rocket className="w-3 h-3" /> DESIGNED FOR HIGH-G MANEUVERS

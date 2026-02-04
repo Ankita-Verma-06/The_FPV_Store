@@ -99,7 +99,7 @@ const Checkout = () => {
                     {/* Left - Form Content */}
                     <div className="flex-grow">
                         <header className="mb-10">
-                            <h1 className="text-5xl font-black text-white tracking-tighter mb-4 uppercase italic">
+                            <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter mb-4 uppercase italic">
                                 MISSION <span className="text-gradient">DEPLOYMENT</span>
                             </h1>
                             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10">
@@ -278,8 +278,8 @@ const Checkout = () => {
                                             <button
                                                 type="submit"
                                                 className={`mt-12 w-full flex items-center justify-center gap-4 py-6 rounded-full font-black tracking-[0.4em] uppercase transition-all duration-500 relative overflow-hidden group ${(paymentMethod === 'QR_PAY' && !formData.transactionId)
-                                                        ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
-                                                        : 'bg-white text-black hover:bg-[#00e5ff] hover:text-black shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-95'
+                                                    ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
+                                                    : 'bg-white text-black hover:bg-[#00e5ff] hover:text-black shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-95'
                                                     }`}
                                             >
                                                 <span className="relative z-10 italic">Execute Final Deployment</span>
@@ -346,8 +346,8 @@ const Checkout = () => {
 const StepIndicator = ({ active, number, label }) => (
     <div className="flex flex-col items-center gap-2">
         <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-xs transition-all duration-500 border ${active
-                ? 'checkout-step-active border-transparent'
-                : 'bg-white/5 border-white/10 text-gray-600'
+            ? 'checkout-step-active border-transparent'
+            : 'bg-white/5 border-white/10 text-gray-600'
             }`}>
             {number}
         </div>
